@@ -4,20 +4,15 @@ function get_water_volume(island) {
     
 	var minHeap = new MinHeap();
 	
-    minHeap.enqueue(17);
-    minHeap.enqueue(15);
-    minHeap.enqueue(13);
-    minHeap.enqueue(10);
-    minHeap.enqueue(2);
-    minHeap.enqueue(4);
-    minHeap.enqueue(6);
     
-    return minHeap.show();
+    return 0;
 };
 
+// Реализация min-heap кучи
 function MinHeap() {
     var data = [];
     
+    // Метод добавления элемента в кучу
     this.enqueue = function(val) {
         data.push(val);
       
@@ -37,6 +32,7 @@ function MinHeap() {
         }
     };
     
+    // Метод извлечения минимального элемента
     this.dequeue = function() {
         if(data.length <= 0){
             return null;
@@ -52,19 +48,19 @@ function MinHeap() {
         while (true){
             var left = 2 * index + 1;
             var right = left + 1;
-            var smallest = index;
+            var smallestValueIndex = index;
             
-            if (left < data.length && data[left] < data[smallest])
-                smallest = left;
-            if (right < data.length && data[right] < data[smallest])
-                smallest = right;
+            if (left < data.length && data[left] < data[smallestValueIndex])
+                smallestValueIndex = left;
+            if (right < data.length && data[right] < data[smallestValueIndex])
+                smallestValueIndex = right;
             
-            if (smallest != index){
-                var temp = data[smallest];
-                data[smallest] = data[index];
+            if (smallestValueIndex != index){
+                var temp = data[smallestValueIndex];
+                data[smallestValueIndex] = data[index];
                 data[index] = temp;
                 
-                index = smallest
+                index = smallestValueIndex
             }
             else {
                 break;

@@ -21,7 +21,7 @@ describe("MinHeap", function() {
         extractTestData.push(minHeap.dequeue());
     }
     
-    it("Проверка отсортированности извлекаемых значений\n\r" + extractTestData.join(", "), function() {
+    it("Проверка отсортированности извлекаемых значений " + extractTestData.join(", "), function() {
         for(var i = 0; i < testData.length; i++){
             assert.equal(extractTestData[i], testData[i], extractTestData[i]+" равно "+testData[i]);
         }
@@ -37,7 +37,19 @@ describe("MinHeap", function() {
       });
   }
   
+  function usedHeapDequeue(){
+      var minHeap = new MinHeap();
+      minHeap.enqueue(1);
+      minHeap.dequeue();
+      var element = minHeap.dequeue();
+      
+      it("При попытке извлечения из пустой использованной кучи вернется " + element, function() {
+         assert.isNull(element);
+      });
+  }
+  
   emptyHeapDequeue();
+  usedHeapDequeue();
   for(var i = 0; i < 100; i++){
     var count = Math.floor(Math.random() * 250) + 1;
     makeTest(count);
