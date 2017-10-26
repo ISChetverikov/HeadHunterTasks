@@ -48,13 +48,34 @@ describe("MinHeap", function() {
       });
   }
   
-  emptyHeapDequeue();
+  /*emptyHeapDequeue();
   usedHeapDequeue();
   for(var i = 0; i < 100; i++){
     var count = Math.floor(Math.random() * 250) + 1;
     makeTest(count);
-  }
+  } */
+});
+
+
+describe("Water task", function () {
+        
+    it("Воды на острове [[4,5,4],[3,1,5],[5,4,1]] нормально - 2", function() {
+        var island1 = [[4,5,4],[3,1,5],[5,4,1]];
+        assert.equal(get_water_volume(island1), 2);
+    });
     
-  
-  
+    it("Воды на острове [[5,3,4,5],[6,2,1,4],[3,1,1,4],[8,5,4,3]] нормально - 7", function() {
+        var island2 = [[5,3,4,5],[6,2,1,4],[3,1,1,4],[8,5,4,3]];
+        assert.equal(get_water_volume(island2), 7);
+    });
+    
+    it("Воды на острове [[2,2,2],[2,1,2],[2,1,2],[2,1,2]] нормально - 0", function() {
+        var island3 = [[2,2,2],[2,1,2],[2,1,2],[2,1,2]];
+        assert.equal(get_water_volume(island3), 0);
+    });
+    
+    it("Воды на острове [[5,7,4,10,16],[28,1,1,3,400],[999,100,100,100,500],[18,2,2,10,158],[28,14,32,48,11]] нормально - 35", function() {
+        var island4 = [[5,7,4,10,16],[28,1,1,3,400],[999,100,100,100,500],[18,2,2,10,158],[28,14,32,48,11]];
+        assert.equal(get_water_volume(island4), 35);
+    });
 });
