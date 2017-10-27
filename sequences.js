@@ -1,7 +1,14 @@
-
+// Поиск последовательности цифр в бесконечной последовательности,
+// составленной из подряд идущих натуральных чисел
+// 
+// Реализовано с помощью алгоритма Кнута-Морриса-Пратта
+//
+// param A - искомая последовательность
+// return - позиция начала искомой последовательности в бесконечной последовательности
 function find_sequence(A) {
     var pattern = A;
     
+    // Генератор бесконечной последовательности
     var generateIntegerSequence = function* (){
         for(var i = 1;; i++){
             var str = String(i);
@@ -9,35 +16,38 @@ function find_sequence(A) {
                 yield str.charAt(j);
         }
     }
+    var generator = generateIntegerSequence();
     
-    var pi = [];
-    pi[0] = 0;
+    var prefixes = []; // Массив значений префикс функции 
+    prefixes[0] = 0;
     
     for (var i=1; i < pattern.length; ++i) 
     {
-        var j = pi[i-1];
-        while ((j > 0) && (pattern[i] != pattern[j])) 
-            j = pi[j-1];			
-        if (pattern[i] == pattern[j]) 
-            ++j; 
-        pi[i] = j;
+        // Рассчет текущего значения префикс функции для символа искомой строки
+        var p = prefixes[i-1]; 
+        while ((p > 0) && (pattern[i] != pattern[p])) 
+            p = prefixes[p-1];			
+        if (pattern[i] == pattern[p]) 
+            ++p; 
+        prefixes[i] = p;
     }
-    console.log(pi);
-    
-    var generator = generateIntegerSequence();
-    var j=0; // длина префикса для последнего обработанного элемента
+   
+    var p=0;
     for (var i=0;; i++) 
     {
         var c = generator.next().value;
         
-        while ((j > 0) && (c != pattern[j])) // символ строки не совпал с символом в образце
-            j = pi[j-1];					    // берем ранее рассчитанное значение (начиная с максимально возможных)
-        if (c == pattern[j])				// есть совпадение 
-            ++j;							// увеличиваем длину префикса на 1
-        if (j==pattern.length)
-            break;			// образец найден, вызовем функцию обработки
+        // Нахождение значений префикс функции для символа бесконечной последовательности
+        while ((p > 0) && (c != pattern[p])) 
+            p = prefixes[p-1];					    
+        if (c == pattern[p])				
+            ++p;					
+        if (p==pattern.length)
+            break;			// Строка найдена, если значение префикс функции равно длине искомой строки
     }
     
+    // Было найдено вхождение последнего символа => следует вычесть длину оставшихся символов
+    // и добавить 1 по требованию задания
     return i - (pattern.length - 1) + 1;
 }
 

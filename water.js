@@ -1,14 +1,19 @@
-
-
+// Подсчет количества воды, скопившейся на острове
+// Поочередно добавляются граничные ячейки в очередь с приоритетом (у наименьшей ячейки наивысший приоритет),
+// затем при извлечении посдчитывается какого уровня воды могут достичь еще не обработанные соседние клетки,
+// которые затем сами попадают в очередь.
+//
+// param island - двумерный массив целых, задающий высоты ячеек острова
+// return - количество скопившейся воды
 function get_water_volume(island) {
-    
+    // Структура для описания ячейки острова
     function Point(height, x, y) {
         this.height = height;
         this.x = x;
         this.y = y;
     };
 
-    // Реализация min-heap кучи
+    // Реализация min-heap кучи, используемой в качестве очереди с приоритетом
     function MinHeap(fieldName) {
         var data = [];
         var indexedFieldName = fieldName;
@@ -75,6 +80,7 @@ function get_water_volume(island) {
 	var M = island.length;
     var N = island[0].length;
     
+    // Двумерная маска посещенных вершин
     var visitedMask = [];
     for(var i = 0; i < M; i++){
         visitedMask[i] = [];
@@ -83,7 +89,10 @@ function get_water_volume(island) {
         }
     }
     
+    // Угловые ячейки ни на что не влияют
     visitedMask[0][0] = visitedMask[M-1][N-1] = visitedMask[M-1][0] = visitedMask[0][N-1] = 1;
+    // Помещение граничных ячеек в очередь с приоритетом 
+    // Высший приоритет у ячейки с наименьшей высотой
     for (var i = 1; i < M-1; i++){
         minHeap.enqueue(new Point(island[i][0], i, 0));
         minHeap.enqueue(new Point(island[i][N-1], i, N-1));
@@ -100,6 +109,8 @@ function get_water_volume(island) {
     var neighbours = [[1, 0],[0, 1],[-1, 0],[0, -1]];
     var waterVolume = 0;
     var point;
+    // Получение из очереди ячейки и "затопление" низлежащих соседей
+    // При этом идет подсчет прибывшей воды
     while ((point = minHeap.dequeue()) !== null ){
         for (var direction in neighbours){
             var x = point.x + neighbours[direction][0];
