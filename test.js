@@ -57,7 +57,7 @@ describe("MinHeap", function() {
 });
 
 
-describe("Water task", function () {
+/*describe("Water task", function () {
         
     it("Воды на острове [[4,5,4],[3,1,5],[5,4,1]] нормально - 2", function() {
         var island1 = [[4,5,4],[3,1,5],[5,4,1]];
@@ -78,4 +78,17 @@ describe("Water task", function () {
         var island4 = [[5,7,4,10,16],[28,1,1,3,400],[999,100,100,100,500],[18,2,2,10,158],[28,14,32,48,11]];
         assert.equal(get_water_volume(island4), 35);
     });
+    
+    it("Воды на острове [[1]] нормально - 0", function() {
+        var island5 = [[1]];
+        assert.equal(get_water_volume(island5), 0);
+    });
+});*/
+describe("Sequence task", function () {
+    
+    it("Запуск", function() {
+        
+        assert.equal(find_sequence('213'), 15);
+    });
 });
+
